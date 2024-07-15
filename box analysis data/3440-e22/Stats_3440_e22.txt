@@ -1,0 +1,8 @@
+Statistical Analysis of Intensity Data for: e22_for_clarius (-178,179,180)
+Mean Intensity: 0.26
+Median Intensity: 0.25
+Standard Deviation: 0.11
+Minimum Intensity: 0.01
+Maximum Intensity: 0.78
+25th Percentile: 0.18
+75th Percentile: 0.35

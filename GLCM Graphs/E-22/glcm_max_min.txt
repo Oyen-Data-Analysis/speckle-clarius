@@ -1,0 +1,41 @@
+contrast:
+  Max value: 19.86 (File: Analysis\Control_Patients_Segmented\186-1\Visit 1 - 02.12.24\Placenta\IMG_20240212_1_26.dcm)     
+  Min value: 2.13 (File: Analysis\Control_Patients_Segmented\192-1\Visit 1\IMG_20240312_2_41.dcm)
+
+dissimilarity:
+  Max value: 0.28 (File: Analysis\Control_Patients_Segmented\185-1\Visit 1 - 02.07.24\Placenta\IMG_20240207_1_24.dcm)      
+  Min value: 0.06 (File: Analysis\Control_Patients_Segmented\177-1\Visit 1 - 01.19.24\Placenta\IMG_20240119_1_41.dcm)      
+
+homogeneity:
+  Max value: 1.00 (File: Analysis\Control_Patients_Segmented\177-1\Visit 1 - 01.19.24\Placenta\IMG_20240119_1_41.dcm)      
+  Min value: 0.99 (File: Analysis\Control_Patients_Segmented\185-1\Visit 1 - 02.07.24\Placenta\IMG_20240207_1_24.dcm)      
+
+energy:
+  Max value: 0.99 (File: Analysis\Control_Patients_Segmented\186-1\Visit 2 - 03.26.24\Placenta\IMG_20240326_1_24.dcm)      
+  Min value: 0.98 (File: Analysis\Control_Patients_Segmented\186-1\Visit 1 - 02.12.24\Placenta\IMG_20240212_1_26.dcm)      
+
+correlation:
+  Max value: 0.98 (File: Analysis\Control_Patients_Segmented\192-1\Visit 1\IMG_20240312_2_41.dcm)
+  Min value: 0.85 (File: Analysis\Control_Patients_Segmented\185-1\Visit 2 - 03.04.24\Placenta\IMG_20240304_1_36.dcm)      
+
+FGR Group GLCM Feature Statistics:
+
+contrast:
+  Max value: 179.40 (File: Analysis\FGR_Patients_Segmented\187-1\Visit 2\IMG_20240306_1_38.dcm)
+  Min value: 1.95 (File: Analysis\FGR_Patients_Segmented\190-1\Visit 2\IMG_20240501_1_30.dcm)
+
+dissimilarity:
+  Max value: 3.00 (File: Analysis\FGR_Patients_Segmented\187-1\Visit 2\IMG_20240306_1_38.dcm)
+  Min value: 0.06 (File: Analysis\FGR_Patients_Segmented\190-1\Visit 1\IMG_20240306_2_33.dcm)
+
+homogeneity:
+  Max value: 0.99 (File: Analysis\FGR_Patients_Segmented\183-1\Visit 1 - 02.06.24\Placenta\IMG_20240206_1_30.dcm)
+  Min value: 0.67 (File: Analysis\FGR_Patients_Segmented\187-1\Visit 2\IMG_20240306_1_38.dcm)
+
+energy:
+  Max value: 0.99 (File: Analysis\FGR_Patients_Segmented\183-1\Visit 2 - 03.19.24\Placenta\IMG_20240320_3_32.dcm)
+  Min value: 0.40 (File: Analysis\FGR_Patients_Segmented\187-1\Visit 2\IMG_20240306_1_38.dcm)
+
+correlation:
+  Max value: 0.98 (File: Analysis\FGR_Patients_Segmented\190-1\Visit 1\IMG_20240306_2_30.dcm)
+  Min value: 0.90 (File: Analysis\FGR_Patients_Segmented\173-1\Visit 1\Placenta\IMG_20240110_1_71.dcm)

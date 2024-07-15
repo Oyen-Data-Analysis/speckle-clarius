@@ -1,0 +1,17 @@
+Statistical Analysis of Intensity Data for: clarius-1st-control_5000
+Mean Intensity: 0.24
+Median Intensity: 0.24
+Standard Deviation: 0.09
+Minimum Intensity: 0.02
+Maximum Intensity: 0.91
+25th Percentile: 0.18
+75th Percentile: 0.31
+
+Statistical Analysis of Intensity Data for: clarius-1st-fgr_5000
+Mean Intensity: 0.20
+Median Intensity: 0.20
+Standard Deviation: 0.08
+Minimum Intensity: 0.01
+Maximum Intensity: 0.65
+25th Percentile: 0.16
+75th Percentile: 0.25
