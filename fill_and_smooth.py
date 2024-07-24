@@ -4,7 +4,15 @@ import cv2
 import numpy as np
 import SimpleITK as sitk
 import os
+from PIL import ImageFilter
 
+def smooth(image, radius):
+    smoothed_image = image.filter(ImageFilter.GaussianBlur(radius=radius))
+    # Convert smoothed_image to grayscale
+    smoothed_gray_array = np.array(smoothed_image)
+    # Normalize the image
+    smoothed_gray_array = cv2.normalize(smoothed_gray_array, None, 0, 255, cv2.NORM_MINMAX).astype('uint8')
+    return smoothed_gray_array
 
 def fill(original_image_array):
     image_array = original_image_array.copy()
@@ -47,24 +55,25 @@ def fill(original_image_array):
                 image_array[pix_height, pix_width] = 0
     return image_array
 
-def fill_and_save_dicom(dicom_path, output_dir):
-    dicom_data = pydicom.dcmread(dicom_path).pixel_array
-    dicom_image_array = np.where(dicom_data > 0, 255, 0)
-    filled_image = fill(dicom_image_array)
-    output_path = output_dir + "/"+os.path.basename(dicom_path).replace(".dcm", ".filled_image.mha")
-    sitk.WriteImage(sitk.GetImageFromArray(filled_image), output_path)
-    return output_path
-
-def fill_and_save_jpg(image_path, output_dir):
+def fill_and_save_jpg(image_path, output_dir, smooth_image="large"):
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-    image = np.where(image > 0, 255, 0)
-    filled_image = fill(image)
-    output_path = output_dir + "/"+os.path.basename(image_path).replace(".jpg", ".filled_image.mha")
-    sitk.WriteImage(sitk.GetImageFromArray(filled_image), output_path)
+    image = np.where(image > 0, 255, 0).astype(np.uint8)
+    filled_image_array = fill(image)
+    filled_image = Image.fromarray(filled_image_array, mode='L')
+    if smooth_image == "large":
+        smoothed_image_array = smooth(filled_image, radius=20)
+    elif smooth_image == "small":
+        smoothed_image_array = smooth(filled_image, radius=10)
+    if image_path.endswith(".jpg"):
+        output_path = output_dir + "/"+os.path.basename(image_path).replace("_outlined.jpg", "_filled.jpg")
+    else:
+        output_path = output_dir + "/"+os.path.basename(image_path).replace("_outlined.jpeg", "_filled.jpg")
+    sitk.WriteImage(sitk.GetImageFromArray(smoothed_image_array), output_path)
     return output_path
 
-paths = ['Output_Segmented_Images/IMG_20240214_1_30.0_segmented.jpg',
-         'Output_Segmented_Images/IMG_20240214_1_31.0_segmented.jpg',
-         'Output_Segmented_Images/IMG_20240214_1_32.0_segmented.jpg']
-for path in paths:
-    fill_and_save_jpg(path, "Output_Segmented_Images")
+paths = []
+for path in os.listdir("Outlined_Images"):
+    if path.endswith(".jpg"):
+        print(fill_and_save_jpg(os.path.join("Outlined_Images", path), "Glowing_Placentas", smooth_image="small"))
+    else:
+        print(fill_and_save_jpg(os.path.join("Outlined_Images", path), "Glowing_Placentas"))
