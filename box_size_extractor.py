@@ -1,126 +1,121 @@
-import pydicom
-import SimpleITK as sitk
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 import os
 import re
-import csv
+from config import *
+import pandas as pd
 
 PATIENT_ID_REGEX = re.compile(r"FGR\d{3}-1")
 
-# def read_scan_image(path):
-#     """Reads and returns a DICOM image as a numpy array."""
-#     image_array = cv2.imread(path)
-#     image_array = (np.maximum(image_array, 0) / image_array.max()) * 255.0  # Normalize
-#     image_array = np.uint8(image_array)
-#     return image_array
+def read_in_mask(path):
+    mask_array = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+    return mask_array
 
-# def read_mask_image(path):
-#     """Reads and returns an MHA image as a numpy array."""
-#     image_array = cv2.imread(path)
-#     image_array = np.squeeze(image_array)  # Remove singleton dimensions if any
-#     return image_array
+def find_boundaries(grayscale_mask):
+    height, width = grayscale_mask.shape
 
+    # calculate bounds for height
+    height_arr = np.zeros((width, 2))
 
-def largest_rectangle(binary_mask):
-    nrows, ncols = binary_mask.shape
-    max_area = (0, None)  # (area, top-left corner, dimensions)
-    h = np.zeros(ncols, dtype=int)
-    
-    for row in range(nrows):
-        for col in range(ncols):
-            h[col] = h[col] + 1 if binary_mask[row, col] else 0
-            
-        for start_col in range(ncols):
-            if h[start_col]:
-                width = 1
-                for k in range(start_col + 1, ncols):
-                    if h[k] >= h[start_col]:
-                        width += 1
-                    else:
-                        break
-                area = width * h[start_col]
-                if area > max_area[0]:
-                    max_area = (area, (row - h[start_col] + 1, start_col), (h[start_col], width))
-    
-    _, (top_left_y, top_left_x), (height, width) = max_area
-    return top_left_x, top_left_y, width, height
+    for pix_width in range (width):
+        max_height = 0
+        min_height = height - 1
+        for pix_height in range (height):
+            if grayscale_mask[pix_height, pix_width] == 255:
+                if pix_height > max_height:
+                    max_height = pix_height
+                if pix_height < min_height:
+                    min_height = pix_height
+            height_arr[pix_width][0] = max_height
+            height_arr[pix_width][1] = min_height
+    return height_arr
 
-def find_largest_rectangle_in_segmentation(scan_path, segmentation_path):
-    # Load scan and segmentation images
-    scan_array = cv2.imread(scan_path)
-    scan_array = cv2.normalize(scan_array, None, 0, 255, cv2.NORM_MINMAX)
+def largest_rectangle(height_arr):
+    max_area = 0
+    top_left_x = 0
+    top_left_y = 0
+    # Find the left-top of placenta
+    for x_coord, max_min_height in enumerate(height_arr):
+        if max_min_height[0] - max_min_height[1] > 0:
+            top_left_x = x_coord
+            top_left_y = max_min_height[0]
+            break
+    max_height = 0
+    max_width = 0
+    # Find largest rectangle starting from current column
+    for starting_x in range(top_left_x, len(height_arr)):
+        max_area_from_x = 0
+        max_width_from_x = 0
+        max_height_from_x = 0
+        height = height_arr[starting_x][0] - height_arr[starting_x][1] + 1
+        if height <= 0:
+            continue
+        starting_y = height_arr[starting_x][1]
+        # Shrink height if necessary and update largest rectangle from x column
+        for ending_x in range(starting_x, len(height_arr)):
+            height = min(height_arr[ending_x][0], height_arr[starting_x][0]) - max(height_arr[ending_x][1], top_left_y) + 1
+            width = ending_x - starting_x + 1
+            area = width * height
+            if area > max_area_from_x:
+                if height_arr[ending_x][1] > starting_y:
+                    starting_y = height_arr[ending_x][1]
+                max_area_from_x = area
+                max_width_from_x = width
+                max_height_from_x = height
+        # If the max area of the rectangle starting from x is greater than the current max area, update the max area
+        if max_area_from_x > max_area:
+            max_area = max_area_from_x
+            top_left_x = starting_x
+            top_left_y = starting_y
+            max_width = max_width_from_x
+            max_height = max_height_from_x
+    return top_left_x, top_left_y, max_width, max_height
 
-    mask_array = cv2.imread(segmentation_path)
+def tally_largest_sizes(group, mode="per patient"):
+    FILE_PATHS = "File_Patient_Info.csv"
+    # Read the CSV file
+    df = pd.read_csv(FILE_PATHS)
 
-    # Ensure segmentation is binary
-    mask_array = mask_array.astype(np.uint8)
-    if len(mask_array.shape) == 3 and mask_array.shape[2] == 3:
-        mask_array = cv2.cvtColor(mask_array, cv2.COLOR_BGR2GRAY)
-    _, mask_array = cv2.threshold(mask_array, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-    contours, _ = cv2.findContours(mask_array, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    cv2.drawContours(scan_array, contours, -1, (0,255,0), 2)  # Green outline
+    # Get all mask file paths associated with current group
+    rows = df[(df['Machine'] == group.lower()) & (df['File Type'] == 'mask')]
+    patient_ids = rows['ID'].unique()
+    # For Debugging purposes, use only one patient
+    patient_ids = patient_ids[:1]
+    mask_paths = {patient_id: rows[rows['ID'] == patient_id]['Path'] for patient_id in patient_ids}
+    # Find largest rectangle coordinates for each mask
+    largest_rectangles = []
+    for id in mask_paths.keys():
+        patient_max_area = 0
+        patient_mask_paths = mask_paths[id]
+        for mask_path in patient_mask_paths:
+            mask_array = read_in_mask(mask_path)
+            height_arr = find_boundaries(mask_array)
+            temp_top_left_x, temp_top_left_y, temp_width, temp_height = largest_rectangle(height_arr)
+            if temp_width * temp_height > patient_max_area:
+                patient_max_area = temp_width * temp_height
+                patient_largest_rectangle = (id, mask_path, temp_top_left_x, temp_top_left_y, temp_width, temp_height, patient_max_area)    
+        print(patient_largest_rectangle)
+        largest_rectangles.append(patient_largest_rectangle)
 
-    # Find the largest rectangle inside the segmentation
-    top_left_x, top_left_y, width, height = largest_rectangle(mask_array)
-
-    # Draw the largest rectangle on the DICOM image
-    cv2.rectangle(scan_array, (top_left_x, top_left_y), (top_left_x + width, top_left_y + height), (0,0,255), 3)
-    area = width * height  # Calculate the area based on the dimensions found
-    return scan_array, area, width, height
-
-
-def graph_largest_rectangles(group, root_directory=""):
-    areas = []
-    widths = []
-    heights = []
-    scans = []
-    masks = []
-
-    for subdir, dirs, files in os.walk(os.path.join(root_directory, "Export for Globius", group)):
-        if subdir.endswith("Unlabelled Clarius Images"):
-            base_names = [os.path.basename(f) for f in files if f.endswith(".jpeg")]
-            print(base_names)
-            scans = [os.path.join(subdir, f) for f in base_names]
-            masks = [os.path.join("Output_Masks", f.replace(".jpeg", "_mask.jpg")) for f in base_names]
-            for base_name, scan_file, mask_file in zip(base_names, scans, masks):
-                if os.path.exists(mask_file):
-                    outlined_image, area, width, height = find_largest_rectangle_in_segmentation(scan_file, mask_file)
-                    areas.append(area)
-                    widths.append(width)
-                    heights.append(height)
-                            
-                    # Convert outlined_image to RGB if needed (OpenCV uses BGR by default)
-                    if len(outlined_image.shape) == 2:  # If the image is grayscale
-                        outlined_image = cv2.cvtColor(outlined_image, cv2.COLOR_GRAY2BGR)
-                            
-                    # Save the outlined image as PNG
-                    outlined_path = os.path.join(root_directory, "Outlined_Images", base_name.replace(".jpeg", "_outlined.png"))
-                    cv2.imwrite(outlined_path, outlined_image)
-        continue
-    
-    return areas, widths, heights
-
+    # Return the result
+    return largest_rectangles
 
 # Example usage:
 # Replace '/path/to/your/directory' with the actual directory path containing the DICOM and MHA files.
 # graph_largest_rectangles('/path/to/your/directory')
-control = graph_largest_rectangles("Controlled")
-fgr = graph_largest_rectangles("FGR")
-with open("boxes.csv", 'w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(['Area', 'Width', 'Height'])
-    for item in zip(control[0], control[1], control[2]):
-        writer.writerow(item)
-    for item in zip(fgr[0], fgr[1], fgr[2]):
-        writer.writerow(item)
-print("Controlled:", control)
-print("FGR:", fgr)
+e22_largest_size_list = tally_largest_sizes(group="E-22", mode="per patient")
+e22_df = pd.DataFrame(e22_largest_size_list, columns=["ID", "Mask Path", "Top Left X", "Top Left Y", "Width", "Height", "Area"])
+e22_df.to_csv("e22_largest_size.csv", index=False)
+# e22_largest_size_list = tally_largest_sizes(group="E-22", mode="per image")
+clarius_largest_size_list = tally_largest_sizes(group="clarius", mode="per patient")
+clarius_df = pd.DataFrame(clarius_largest_size_list, columns=["ID", "Mask Path", "Top Left X", "Top Left Y", "Width", "Height", "Area"])
+clarius_df.to_csv("clarius_largest_size.csv", index=False)
+# clarius_largest_size_list = tally_largest_sizes(group="clarius", mode="per image")
 
  # Plotting the histogram of areas with 20 bins
-plt.figure(figsize=(10, 5))
-plt.hist(control[0], bins=50, color='#D7D7D9', )
-plt.hist(fgr[0], bins=50, color='#953017', alpha=.85)
-plt.tight_layout()
-plt.show()
+# plt.figure(figsize=(10, 5))
+# plt.hist(control[0], bins=50, color='#D7D7D9', )
+# plt.hist(fgr[0], bins=50, color='#953017', alpha=.85)
+# plt.tight_layout()
+# plt.show()

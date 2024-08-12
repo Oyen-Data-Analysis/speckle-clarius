@@ -55,25 +55,34 @@ def fill(original_image_array):
                 image_array[pix_height, pix_width] = 0
     return image_array
 
-def fill_and_save_jpg(image_path, output_dir, smooth_image="large"):
+def fill_and_save_jpg(image_path, output_dir, smooth_image="y"):
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     image = np.where(image > 0, 255, 0).astype(np.uint8)
     filled_image_array = fill(image)
     filled_image = Image.fromarray(filled_image_array, mode='L')
-    if smooth_image == "large":
-        smoothed_image_array = smooth(filled_image, radius=20)
-    elif smooth_image == "small":
+    # if image_path.endswith(".jpg"):
+    #     output_path = output_dir + "/"+os.path.basename(image_path).replace("_outlined.jpg", "_filled.jpg")
+    # else:
+    #     output_path = output_dir + "/"+os.path.basename(image_path).replace("_outlined.jpeg", "_mask.jpg")
+    output_path = image_path
+    print(output_path)
+    if smooth_image == "y":
         smoothed_image_array = smooth(filled_image, radius=10)
-    if image_path.endswith(".jpg"):
-        output_path = output_dir + "/"+os.path.basename(image_path).replace("_outlined.jpg", "_filled.jpg")
+        smoothed_image_array = cv2.threshold(smoothed_image_array, 127, 255, cv2.THRESH_BINARY)[1]
+        sitk.WriteImage(sitk.GetImageFromArray(smoothed_image_array), output_path)
     else:
-        output_path = output_dir + "/"+os.path.basename(image_path).replace("_outlined.jpeg", "_filled.jpg")
-    sitk.WriteImage(sitk.GetImageFromArray(smoothed_image_array), output_path)
+        filled_image.save(output_path)
     return output_path
 
-paths = []
-for path in os.listdir("Outlined_Images"):
-    if path.endswith(".jpg"):
-        print(fill_and_save_jpg(os.path.join("Outlined_Images", path), "Glowing_Placentas", smooth_image="small"))
-    else:
-        print(fill_and_save_jpg(os.path.join("Outlined_Images", path), "Glowing_Placentas"))
+# paths = []
+# for path in os.listdir("Outlined_Images"):
+#     if path.endswith(".jpg"):
+#         print(fill_and_save_jpg(os.path.join("Outlined_Images", path), "Glowing_Placentas", smooth_image="small"))
+#     else:
+#         print(fill_and_save_jpg(os.path.join("Outlined_Images", path), "Glowing_Placentas"))
+
+for mask in os.listdir("Output_Masks"):
+    if mask.startswith("IMG"):
+        fill_and_save_jpg(os.path.join("Output_Masks", mask), "Output_Masks")
+
+# fill_and_save_jpg("Output_Masks\\IMG_2024_0110_73_mask.jpg", "Output_Masks")
