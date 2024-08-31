@@ -55,16 +55,12 @@ def fill(original_image_array):
                 image_array[pix_height, pix_width] = 0
     return image_array
 
-def fill_and_save_jpg(image_path, output_dir, smooth_image="y"):
+def fill_and_save_jpg(image_path, output_dir="Glowing_Placentas", smooth_image="y"):
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     image = np.where(image > 0, 255, 0).astype(np.uint8)
     filled_image_array = fill(image)
     filled_image = Image.fromarray(filled_image_array, mode='L')
-    # if image_path.endswith(".jpg"):
-    #     output_path = output_dir + "/"+os.path.basename(image_path).replace("_outlined.jpg", "_filled.jpg")
-    # else:
-    #     output_path = output_dir + "/"+os.path.basename(image_path).replace("_outlined.jpeg", "_mask.jpg")
-    output_path = image_path
+    output_path = os.path.join(output_dir, os.path.basename(image_path).replace("_outlined.jpg", "_mask.jpg"))
     print(output_path)
     if smooth_image == "y":
         smoothed_image_array = smooth(filled_image, radius=10)
@@ -74,15 +70,16 @@ def fill_and_save_jpg(image_path, output_dir, smooth_image="y"):
         filled_image.save(output_path)
     return output_path
 
+# Fill and Smooth all images in a directory
 # paths = []
-# for path in os.listdir("Outlined_Images"):
-#     if path.endswith(".jpg"):
-#         print(fill_and_save_jpg(os.path.join("Outlined_Images", path), "Glowing_Placentas", smooth_image="small"))
-#     else:
-#         print(fill_and_save_jpg(os.path.join("Outlined_Images", path), "Glowing_Placentas"))
+for path in os.listdir("Outlined_Images"):
+    if path.endswith(".jpg"):
+        print(fill_and_save_jpg(os.path.join("Outlined_Images", path), "Output_Masks"))
 
-for mask in os.listdir("Output_Masks"):
-    if mask.startswith("IMG"):
-        fill_and_save_jpg(os.path.join("Output_Masks", mask), "Output_Masks")
+# If you messed up the outlining and saved outlined images in Output_Masks, run this code to fill and smooth them
+# for mask in os.listdir("Output_Masks"):
+#     if mask.startswith("IMG"):
+#         fill_and_save_jpg(os.path.join("Output_Masks", mask), "Output_Masks")
 
+# Fill and Smooth single image
 # fill_and_save_jpg("Output_Masks\\IMG_2024_0110_73_mask.jpg", "Output_Masks")

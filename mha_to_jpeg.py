@@ -3,6 +3,8 @@ import numpy as np
 import SimpleITK as sitk
 import os
 import cv2
+from config import *
+
 
 def mha_to_jpeg(mha_path, jpeg_path):    
     # Read the mha file
@@ -23,15 +25,18 @@ def dcm_to_jpeg(dcm_path, jpeg_path):
     pil_image.save(jpeg_path)
 
 id = ["FGR173-1", "FGR187-1"]
-
-path = "Analysis"
+path = MAKERERE_PATH
 if not os.path.exists(path):
     print("Path does not exist: ", path)
 for root, dirs, files in os.walk(path):
     for file in files:
         if file.endswith('.mha'):
             mask_path = os.path.join(root, file)
-            jpeg_path = os.path.join("Output_Masks", file.replace('.mha', '_mask.jpg'))
+            jpeg_path = os.path.join("Outlined_Images", file.replace('.mha', '_outlined.jpg'))
+            mha_to_jpeg(mask_path, jpeg_path)
+        elif file.endswith('.mhd'):
+            mask_path = os.path.join(root, file)
+            jpeg_path = os.path.join("Outlined_Images", file.replace('.mhd', '_outlined.jpg'))
             mha_to_jpeg(mask_path, jpeg_path)
 
 # for i in id:

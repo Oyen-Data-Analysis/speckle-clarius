@@ -29,11 +29,13 @@ def draw_a_box(image, top_left_x, top_left_y, width, height):
 df = pd.read_csv("e22_largest_size.csv")
 # # Select every tenth row in df
 # df = df[::10]
+# For testing purposes, only use a small number of rows
 df = df[:1]
 # Read in image
 for _, row in df.iterrows():
     image = cv2.imread(r'' + row["Mask Path"])
     image = draw_a_box(image, row["Top Left X"], row["Top Left Y"], row["Width"], row["Height"])
+    print(row['ID'])
     cv2.imshow("image", image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
@@ -42,11 +44,13 @@ for _, row in df.iterrows():
 df = pd.read_csv("clarius_largest_size.csv")
 # # Select every tenth row in df
 # df = df[::10]
+# For testing purposes, only use a small number of rows
 df = df[:1]
 # Read in image
 for _, row in df.iterrows():
     image = cv2.imread(r'' + row["Mask Path"])
     image = draw_a_box(image, row["Top Left X"], row["Top Left Y"], row["Width"], row["Height"])
+    print(row['ID'])
     cv2.imshow("image", image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()

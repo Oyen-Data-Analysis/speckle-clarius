@@ -4,22 +4,22 @@ import os
 from config import *
 import pydicom
 
-for root, _, files in os.walk(MARKERE_PATH):
+for root, _, files in os.walk(MAKERERE_PATH):
     for file in files:
         if file.endswith(".jpeg") and not file.endswith("(2).jpeg"):
             # read in the image
             image = cv2.imread(os.path.join(root, file), cv2.IMREAD_GRAYSCALE)
             image = cv2.normalize(image, None, 0, 255, cv2.NORM_MINMAX)
             # read in the mask
-            projected_mask_path = os.path.join(MASK_PATH, file.replace(".jpeg", " _filled.jpg"))
-            save_file_name = file.replace(".jpeg", "clarius_segmented.jpg")
+            projected_mask_path = os.path.join(MASK_PATH, file.replace(".jpeg", " _mask.jpg"))
+            save_file_name = file.replace(".jpeg", "_clarius_segmented.jpg")
         elif file.endswith(".dcm"):
             # read in the image
             image = pydicom.dcmread(os.path.join(root, file)).pixel_array
             image = cv2.normalize(image, None, 0, 255, cv2.NORM_MINMAX)
             # read in the mask
-            projected_mask_path = os.path.join(MASK_PATH, file.replace(".dcm", "_filled.jpg"))
-            save_file_name = file.replace(".dcm", "e22_segmented.jpg")
+            projected_mask_path = os.path.join(MASK_PATH, file.replace(".dcm", "_mask.jpg"))
+            save_file_name = file.replace(".dcm", "_e10_segmented.jpg")
         else:
             continue
         if not os.path.exists(projected_mask_path):

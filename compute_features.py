@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Define Patient ID format
-MARKERE_ID = re.compile(r"\d{4}_\d{1}")
+MAKERERE_ID = re.compile(r"\d{4}_\d{1}")
 OYEN_ID = re.compile(r"FGR\d{3}-\d{1}")
 
 def compute_glcm_features(image):
@@ -52,11 +52,13 @@ for index, row in segmentation_files.iterrows():
 processed_df = pd.DataFrame(processed_data)
 
 # Save the processed data to a CSV file
+output_df = pd.concat([df, processed_df]).drop_duplicates()
 processed_df.to_csv("features.csv", index=False)
 
 # Plot the features on box plots
 # Creating a new figure for each feature
-for machine in ['clarius', 'e-22']:
+# Choose a machine to plot the features for: 'clarius', 'e-22', 'e-10'
+for machine in ['e-10']:
     processed_df = pd.read_csv("features.csv")
     machine_df = processed_df[processed_df['Machine'] == machine]
     control_rows = machine_df[machine_df['Group'] == 'control']
