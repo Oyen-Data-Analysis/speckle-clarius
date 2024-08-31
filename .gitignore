@@ -1,3 +1,7 @@
 Analysis/
 Export for Globius/
 config.py
+GLCM Graphs/
+Output_Segmented_Images/
+Output_Masks/
+Outlined_Images/

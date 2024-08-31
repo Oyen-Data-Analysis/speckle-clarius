@@ -1,63 +1,25 @@
-import csv
+from matplotlib import pyplot as plt
+import pandas as pd
+
 import cv2
 import os
-from matplotlib import pyplot as plt
-import numpy as np
-import re
-import pydicom
 from skimage.feature import graycomatrix, graycoprops
-import SimpleITK as sitk
 
-PATIENT_ID_REGEX = re.compile(r"\d{3}-\d")
+from config import *
 
-def find_file_pairs(folder_path, group, ids=[]):
-    scan_file_list = []
-    mask_file_list = []
-    patient_id_list = []
-    # Walk through all directories and subdirectories in the given folder path
-    if group == 'clarius':
-        for root, dirs, files in os.walk(folder_path):
-            ID_MATCH = PATIENT_ID_REGEX.search(root)
-            if not ID_MATCH:
-                continue
-            if root.endswith("Unlabelled Clarius Images"):
-                patient_id = PATIENT_ID_REGEX.search(root).group(0)
-                if ids and patient_id not in ids:
-                    continue
-                patient_id = ID_MATCH.group(0)
-                if ids and patient_id not in ids:
-                    continue
-                for file in files:
-                    if file.endswith(".jpeg"):
-                        # Extract the base name without the extension
-                        file_name= file.rstrip('.jpeg')
-                        predicted_mask_path = os.path.join("Output_Masks", f"{file_name}_mask.jpg")
-                        if os.path.exists(predicted_mask_path):
-                            scan_file_list.append(os.path.join(root, file))
-                            mask_file_list.append(predicted_mask_path)
-                            patient_id_list.append(patient_id)
-    elif group == 'E22':
-        for root, _, files in os.walk(folder_path):
-            ID_MATCH = PATIENT_ID_REGEX.search(root)
-            if not ID_MATCH:
-                continue
-            patient_id = ID_MATCH.group(0)
-            if ids and patient_id not in ids:
-                continue
-            file_list = [f.rstrip('.mha') for f in files if f.endswith('.mha')]
-            for file in file_list:
-                scan_file = os.path.join(root, f"{file}.dcm")
-                if not os.path.exists(scan_file):
-                    print(f"Scan file not found for {root}/{file}.mha")
-                    continue
-                mask_file = os.path.join('Output_Segmented_Images', f"{file}_filled.mha")
-                if os.path.exists(mask_file):
-                    scan_file_list.append(scan_file) 
-                    mask_file_list.append(mask_file)
-                    patient_id_list.append(patient_id)
-                else:
-                    print(f"Filled mask not found for {root}/{file}.dcm")
-    return scan_file_list, mask_file_list, patient_id_list
+BOX_DIMENSIONS = {
+    # E-22, median - stddev, 34000px
+    "0": [(170, 200), (200, 170), (100, 340), (340, 100), (136, 250), (250, 136)],
+    # Clarius, median - stddev, 4500px
+    "1": [(50, 90), (90, 50), (30, 150), (150, 30), (60, 75), (75, 60)],
+}
+
+def extract_size(segmentation, largest_rectangle_x, largest_rectangle_y, largest_w, largest_h, size_option):
+    # Extract the largest rectangle
+    for size in BOX_DIMENSIONS[size_option]:
+        if size[0] < largest_w or size[1] < largest_h:
+            return (segmentation[largest_rectangle_y:largest_rectangle_y + size[0], largest_rectangle_x:largest_rectangle_x + size[1]], size)
+    return None
 
 def compute_glcm_features(image):
     image = image.astype('uint8')
@@ -71,81 +33,32 @@ def compute_glcm_features(image):
     }
     return features
 
-def glcm_for_fixed_size_rectangle(dicom_array, binary_mask):
-    """
-    Extract normalized intensities from a fixed-size rectangle (50x139 or 139x50) within the segmented region.
-
-    Parameters:
-    - dicom_array: The original DICOM image array.
-    - binary_mask: The binary mask array used to find the largest rectangle.
-
-    Returns:
-    - A flattened array of normalized intensities if a suitable rectangle is found; otherwise, an empty array.
-    - A dictionary of GLCM features if a suitable rectangle is found; otherwise, an empty dictionary.
-    """
-    nrows, ncols = binary_mask.shape
-    dimensions = []
-
-    # Define dimensions
-    dimension_options = {
-        "0": [(80, 43), (43, 80)],
-        # "0":[(50,100), (100,50),(40, 125), (125, 40)],
-        # "0": [(100, 100), (50, 200), (200, 50)],
-        "1": [(50, 139), (139, 50)],
-        "2": [(150, 100), (100, 150)],
-        "3": [(200, 125), (125, 200)],
-        "4": [(240, 125), (125, 240)],
-        "5": [(50, 139), (139, 50)],
-        "6": [(150, 100), (100, 150), (75, 200), (200, 75), (120, 125), (125, 120)],
-        "7": [(200, 125), (125, 200),(40, 625), (50, 500), (100, 250), (500, 50), (250, 100)],
-        "8": [(240, 125), (125, 240), (75, 400), (400, 75), (100, 300), (300, 100), (200, 150), (150, 200), (60, 500), (500, 60)]
-    }
-
-    fixed_sizes = dimension_options.get("0")  # Default to the first option if invalid selection
-
-    for size in fixed_sizes:
-        print("Trying size:", size)
-        for row in range(nrows - size[0] + 1):
-            for col in range(ncols - size[1] + 1):
-                if np.all(binary_mask[row:row + size[0], col:col + size[1]]):
-                    dimensions = size
-                    extracted_pixels = dicom_array[row:row + size[0], col:col + size[1]]
-                    glcm_features = compute_glcm_features(extracted_pixels)
-                    return glcm_features, dimensions
-    return {}, (0, 0)  # Return empty dictionary and tuple if no suitable rectangle is found
-
-def process_data(folder_path, group, ids=[]):
-    dimensions = []
-    features = []
-    file_pairs = find_file_pairs(folder_path, group, ids=ids)
-    for scan_file, mask_file, _ in zip(*file_pairs):
-        print(f"Processing {mask_file}...")
-        if group == 'clarius':
-            plain_data = cv2.imread(scan_file, cv2.IMREAD_GRAYSCALE)
-            mask_data = cv2.imread(mask_file, cv2.IMREAD_GRAYSCALE)
-        if group == 'E22':
-            # Your existing code to read DICOM and binary mask here
-            plain_data = pydicom.dcmread(scan_file).pixel_array
-            plain_data = cv2.cvtColor(plain_data, cv2.COLOR_BGR2GRAY)
-            mask_data = sitk.GetArrayFromImage(sitk.ReadImage(mask_file))
-        _, binary_mask = cv2.threshold(mask_data, 0, 255, cv2.THRESH_BINARY)
-
-        # Ensure binary_mask is 2D before passing it
-        if binary_mask.ndim > 2:
-            binary_mask = binary_mask[:, :, 0]
-
-        glcm_features, dimension = glcm_for_fixed_size_rectangle(plain_data, binary_mask)
-        if not glcm_features:
-            print(f"No suitable rectangle found for {mask_file}")
+def process_data(meta_df, group_df, group_ids, machine):
+    group_data = []
+    for id in group_ids:
+        # Find patient's group
+        patient_row = meta_df[meta_df['ID'] == id].values[0]
+        group = patient_row[2]
+        # Open patient's segmentation
+        patient_row = group_df[group_df['ID'] == id]
+        segmentation_path = os.path.join(SEGMENTED_PATH, os.path.basename(patient_row['Mask Path'].values[0]).replace('_mask.jpg', '_segmented.jpg'))
+        if not os.path.exists(segmentation_path):
+            segmentation_path = os.path.join(SEGMENTED_PATH, os.path.basename(patient_row['Mask Path'].values[0]).replace('_mask.jpg', '_clarius_segmented.jpg'))
+        if not os.path.exists(segmentation_path):
+            print(f"Could not find segmentation for patient {id}")
             continue
-        features.append(glcm_features)
-        dimensions.append(dimension)
-    return features, dimensions, file_pairs[2]
-
-E22_Control = 'Analysis\\Control_Patients_Segmented'
-E22_FGR = 'Analysis\\FGR_Patients_Segmented'
-Clarius_Control = 'Export for Globius\\Controlled'
-Clarius_FGR = 'Export for Globius\\FGR'
+        segmentation = cv2.imread(segmentation_path, cv2.IMREAD_GRAYSCALE)
+        # Extract fixed-size box
+        box_output = extract_size(segmentation, int(patient_row['Top Left X'].values[0]), int(patient_row['Top Left Y'].values[0]), int(patient_row['Width'].values[0]), int(patient_row['Height'].values[0]), size_option="0")
+        if box_output is None:
+            print(f"Could not extract box for patient {id}")
+            continue
+        boxed_array, size = box_output
+        # Run GLCM on the fixed-size box
+        glcm_features = compute_glcm_features(boxed_array)
+        group_data.append((id, machine, group, glcm_features['homogeneity'], glcm_features['dissimilarity'], glcm_features['contrast'], glcm_features['correlation'], glcm_features['energy'], patient_row['Top Left X'].values[0], patient_row['Top Left Y'].values[0], size[1], size[0]))
+        print(f"Processed patient {id}")
+    return group_data
 
 ids = ['175-1', 
        '176-1', 
@@ -165,102 +78,44 @@ ids = ['175-1',
        '190-1'
     ]
 
-with open("e22_glcm_features.csv", "w", newline='') as f:
-    writer = csv.writer(f)
-    writer.writerow(['Patient ID', 'Group', 'Homogeneity', 'Dissimilarity', 'Contrast', 'Correlation', 'Energy', 'Width', 'Height'])
-    e22_control_features, e22_control_dimensions, e22_control_ids = process_data(E22_Control, 'E22')
-    e22_fgr_features, e22_fgr_dimensions, e22_fgr_ids = process_data(E22_FGR, 'E22')
+# # Read in Patient Group Data
+# meta_df = pd.read_csv('File_Patient_Info.csv')
 
-    for feature_dict, dimensions, id in zip(e22_control_features, e22_control_dimensions, e22_control_ids):
-        writer.writerow([
-            id,
-            "Control",
-            feature_dict['homogeneity'],
-            feature_dict['dissimilarity'],
-            feature_dict['contrast'],
-            feature_dict['correlation'],
-            feature_dict['energy'],
-            dimensions[0],
-            dimensions[1]
-        ])
+# # process data for E22
+# e22_df = pd.read_csv('e22_largest_size.csv')
+# e22_ids = e22_df['ID'].unique()
+# e22_data = process_data(meta_df, e22_df, e22_ids, 'e-22')
 
-    for feature_dict, dimensions, id in zip(e22_fgr_features, e22_fgr_dimensions, e22_fgr_ids):
-        writer.writerow([
-            id,
-            "FGR",
-            feature_dict['homogeneity'],
-            feature_dict['dissimilarity'],
-            feature_dict['contrast'],
-            feature_dict['correlation'],
-            feature_dict['energy'],
-            dimensions[0],
-            dimensions[1]
-        ])
+# # process data for Clarius
+# clarius_df = pd.read_csv('clarius_largest_size.csv')
+# clarius_ids = clarius_df['ID'].unique()
+# clarius_data = process_data(meta_df, clarius_df, clarius_ids, 'clarius')
 
-    feature_names = e22_control_features[0].keys()  # Getting keys from the first dictionary
+# # Write to CSV
+# output_df = pd.DataFrame(e22_data + clarius_data, columns=['Patient ID', 'Machine', 'Group', 'Homogeneity', 'Dissimilarity', 'Contrast', 'Correlation', 'Energy', 'Top Left X', 'Top Left Y', 'Width', 'Height'])
+# output_df.to_csv('boxed_glcm_features.csv', index=False)
 
-    for feature_name in feature_names:
-            control_values = [feat[feature_name] for feat in e22_control_features]
-            fgr_values = [feat[feature_name] for feat in e22_fgr_features]
+# Plot the data
+output_df = pd.read_csv('boxed_glcm_features.csv')
+for machine in ['e-22', 'clarius']:
+    machine_data = output_df[output_df['Machine'] == machine]
+    for feature in ['Homogeneity', 'Dissimilarity', 'Contrast', 'Correlation', 'Energy']:
+        control_feature_list = machine_data[machine_data['Group'] == 'control'][feature].values
+        fgr_feature_list = machine_data[machine_data['Group'] == 'fgr'][feature].values
+        plt.figure(figsize=(8, 6))
+        bp = plt.boxplot([control_feature_list, fgr_feature_list], patch_artist=True, labels=['Control', 'FGR'])
+        
+        # Set colors for the box plots
+        bp['boxes'][0].set_facecolor('#D7D7D9')
+        bp['boxes'][1].set_facecolor('#953017')
+        
+        plt.title(f"{machine} {feature} Boxed GLCM")
+        plt.ylabel('Value')
 
-            # Creating a new figure for each feature
-            plt.figure(figsize=(8, 6))
-            bp = plt.boxplot([control_values, fgr_values], patch_artist=True, labels=['Control', 'FGR'])
-            
-            # Set colors for the box plots
-            bp['boxes'][0].set_facecolor('#D7D7D9')
-            bp['boxes'][1].set_facecolor('#953017')
-            
-            plt.title(f"E22_{feature_name}")
-            plt.ylabel('Value')
-            plt.show()
+        # Save the plot
+        plt.savefig(os.path.join(GLCM_GRAPH_DIR, f"{machine}_{feature}_boxed_glcm.png"))
 
-# with open("clarius_glcm_features.csv", "w", newline='') as f:
-#     writer = csv.writer(f)
-#     writer.writerow(['Patient ID', 'Group', 'Homogeneity', 'Dissimilarity', 'Contrast', 'Correlation', 'Energy', 'Width', 'Height'])
-
-#     clarius_control_features, clarius_control_dimensions, clarius_control_ids = process_data(Clarius_Control, 'clarius', writer, ids=ids)
-#     clarius_fgr_features, clarius_fgr_dimensions, clarius_fgr_ids = process_data(Clarius_FGR, 'clarius', writer, ids=ids)
-
-#     for feature_dict, dimensions, id in zip(clarius_control_features, clarius_control_dimensions, clarius_control_ids):
-#         writer.writerow([
-#             id,
-#             "Control",
-#             feature_dict['homogeneity'],
-#             feature_dict['dissimilarity'],
-#             feature_dict['contrast'],
-#             feature_dict['correlation'],
-#             feature_dict['energy'],
-#             dimensions[0],
-#             dimensions[1]
-#         ])
-#     for feature_dict, dimensions, id in zip(clarius_fgr_features, clarius_fgr_dimensions, clarius_fgr_ids):
-#         writer.writerow([
-#             id,
-#             "FGR",
-#             feature_dict['homogeneity'],
-#             feature_dict['dissimilarity'],
-#             feature_dict['contrast'],
-#             feature_dict['correlation'],
-#             feature_dict['energy'],
-#             dimensions[0],
-#             dimensions[1]
-#         ])
-#     feature_names = clarius_control_features[0].keys()  # Getting keys from the first dictionary
-#     #   code will break if there are no big enough placentas in control, at which point it's pointless to run the program anyways
-
-#     for feature_name in feature_names:
-#             control_values = [feat[feature_name] for feat in clarius_control_features]
-#             fgr_values = [feat[feature_name] for feat in clarius_fgr_features]
-
-#             # Creating a new figure for each feature
-#             plt.figure(figsize=(8, 6))
-#             bp = plt.boxplot([control_values, fgr_values], patch_artist=True, labels=['Control', 'FGR'])
-            
-#             # Set colors for the box plots
-#             bp['boxes'][0].set_facecolor('#D7D7D9')
-#             bp['boxes'][1].set_facecolor('#953017')
-            
-#             plt.title(f"Clarius_{feature_name}")
-#             plt.ylabel('Value')
-#             plt.show()
+        # Show the plot
+        plt.show()
+        plt.close()
+        
