@@ -45,7 +45,7 @@ df = pd.read_csv("clarius_largest_size.csv")
 # # Select every tenth row in df
 # df = df[::10]
 # For testing purposes, only use a small number of rows
-df = df[:1]
+df = df[df['ID'].str.contains('ITECH')]
 # Read in image
 for _, row in df.iterrows():
     image = cv2.imread(r'' + row["Mask Path"])

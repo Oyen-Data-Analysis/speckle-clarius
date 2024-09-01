@@ -135,9 +135,9 @@ def tally_largest_sizes(group, mode="per patient"):
     return largest_rectangles
 
 # Example usage:
-e22_largest_size_list = tally_largest_sizes(group="E-22", mode="per patient")
-e22_df = pd.DataFrame(e22_largest_size_list, columns=["ID", "Mask Path", "Top Left X", "Top Left Y", "Width", "Height", "Area", "Orientation"])
-e22_df.to_csv("e22_largest_size.csv", index=False)
+# e22_largest_size_list = tally_largest_sizes(group="E-22", mode="per patient")
+# e22_df = pd.DataFrame(e22_largest_size_list, columns=["ID", "Mask Path", "Top Left X", "Top Left Y", "Width", "Height", "Area", "Orientation"])
+# e22_df.to_csv("e22_largest_size.csv", index=False)
 # e22_largest_size_list = tally_largest_sizes(group="E-22", mode="per image")
 clarius_largest_size_list = tally_largest_sizes(group="clarius", mode="per patient")
 clarius_df = pd.DataFrame(clarius_largest_size_list, columns=["ID", "Mask Path", "Top Left X", "Top Left Y", "Width", "Height", "Area", "Orientation"])

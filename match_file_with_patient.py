@@ -127,7 +127,7 @@ def catching_placentas(group):
                         if segmentation_file not in list:
                             list.append(segmentation_file)
                 if file.endswith(".jpeg") and not file.endswith("(2).jpeg"):
-                    mask_path = os.path.join(MASK_PATH, file.replace(".jpeg", "_mask.jpg"))
+                    mask_path = os.path.join(MASK_PATH, file.replace(".jpeg", " _mask.jpg"))
                     if not os.path.exists(mask_path):
                         print(f"Mask not found for {group} patient {id}'s scan: {file}")
                     else:

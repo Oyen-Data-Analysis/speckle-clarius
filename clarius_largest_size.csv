@@ -15,24 +15,25 @@ ID,Mask Path,Top Left X,Top Left Y,Width,Height,Area,Orientation
 183-1,Output_Masks\13_FGR183-1_1_34.0_Plac_1_mask.jpg,326.0,139.0,130.0,59.0,7670.0,vertical
 187-1,Output_Masks\13_FGR187-1_1_35.3_Plac_1_mask.jpg,346.0,137.0,109.0,54.0,5886.0,vertical
 190-1,Output_Masks\13_FGR190-1_1_36.0_Plac_1_mask.jpg,311.0,155.0,154.0,57.0,8778.0,vertical
-ITECH1-0854,Output_Masks\03_ITECH1-0854_1_37.4_Plac_1_mask.jpg,362.0,283.0,398.0,59.0,23482.0,vertical
-ITECH1-0856,Output_Masks\03_ITECH1-0856_1_35.5_Plac_1_mask.jpg,358.0,297.0,471.0,135.0,63585.0,vertical
-ITECH1-0872,Output_Masks\03_ITECH1-0872_1_39.0_Plac_1_mask.jpg,383.0,332.0,384.0,80.0,30720.0,vertical
-ITECH1-0898,Output_Masks\03_ITECH1-0898_1_36.5_Plac_1_mask.jpg,550.0,510.0,218.0,109.0,23762.0,vertical
-ITECH1-0956,Output_Masks\03-ITECH1-0956_1_36.0_Plac_1_mask.jpg,373.0,284.0,430.0,90.0,38700.0,vertical
-ITECH2-0463,Output_Masks\03_iTECH2-0463_1_36.1_Plac_1_mask.jpg,419.0,205.0,273.0,85.0,23205.0,vertical
-ITECH2-0558,Output_Masks\03_iTECH2-0558_1_36.0_Plac_1_mask.jpg,346.0,365.0,338.0,190.0,64220.0,vertical
-ITECH2-0559,Output_Masks\03_iTECH2-0559_1_36.0_Plac_1_mask.jpg,392.0,314.0,107.0,180.0,19260.0,horizontal
-ITECH2-0588,Output_Masks\03_iTECH2-588_1_36.0_Plac_1_mask.jpg,322.0,547.0,461.0,130.0,59930.0,vertical
-ITECH2-0596,Output_Masks\03_iTECH2-0596_1_36.0_Plac_1_mask.jpg,651.0,294.0,78.0,316.0,24648.0,horizontal
-ITECH2-0607,Output_Masks\03_iTECH2-0607_1_36.0_Plac_1_mask.jpg,437.0,353.0,149.0,125.0,18625.0,vertical
-ITECH3-0447,Output_Masks\03_iTECH3-0447_1_37.0_Plac_1_mask.jpg,403.0,282.0,246.0,82.0,20172.0,vertical
-ITECH3-0467,Output_Masks\03_iTECH3-0467_1_35.0_Plac_1_mask.jpg,269.0,282.0,457.0,60.0,27420.0,vertical
-ITECH3-0472,Output_Masks\03_iTECH3-0472_1_36.0_Plac_1_mask.jpg,233.0,354.0,98.0,197.0,19306.0,horizontal
-ITECH3-0502,Output_Masks\03_iTECH3-0502_1_35.4_Plac_1_mask.jpg,267.0,499.0,482.0,169.0,81458.0,vertical
-ITECH3-0537,Output_Masks\03_iTECH3-0537_1_35.5_Plac_1_mask.jpg,360.0,280.0,325.0,90.0,29250.0,vertical
-ITECH3-0556,Output_Masks\03_iTECH3-0556_1_36.2_Plac_1_mask.jpg,278.0,295.0,521.0,63.0,32823.0,vertical
-ITECH3-0560,Output_Masks\03_iTECH3-0560_1_35.4_Plac_1_mask.jpg,354.0,283.0,426.0,83.0,35358.0,vertical
-ITECH4-0261,Output_Masks\03_ITECH4-0261_1_36.3_Plac_1_mask.jpg,359.0,293.0,436.0,119.0,51884.0,vertical
-ITECH4-0465,Output_Masks\03_ITECH4-0465_1_36.0_Plac_1_mask.jpg,444.0,301.0,98.0,267.0,26166.0,horizontal
-ITECH4-0488,Output_Masks\03_ITECH4-0488_1_35.6_Plac_1_mask.jpg,345.0,284.0,402.0,105.0,42210.0,horizontal
+ITECH1-0854,Output_Masks\03_ITECH1-0854_1_37.4_Plac_1 _mask.jpg,175.0,300.0,234.0,68.0,15912.0,vertical
+ITECH1-0856,Output_Masks\03_ITECH1-0856_1_35.5_Plac_1 _mask.jpg,232.0,370.0,106.0,166.0,17596.0,horizontal
+ITECH1-0872,Output_Masks\03_ITECH1-0872_1_39.0_Plac_1 _mask.jpg,325.0,317.0,171.0,36.0,6156.0,vertical
+ITECH1-0898,Output_Masks\03_ITECH1-0898_1_36.5_Plac_1 _mask.jpg,335.0,214.0,148.0,300.0,44400.0,horizontal
+ITECH1-0956,Output_Masks\03-ITECH1-0956_1_36.0_Plac_1 _mask.jpg,182.0,315.0,232.0,59.0,13688.0,vertical
+ITECH2-0463,Output_Masks\03_iTECH2-0463_1_36.1_Plac_1 _mask.jpg,425.0,282.0,97.0,196.0,19012.0,horizontal
+ITECH2-0558,Output_Masks\03_iTECH2-0558_1_36.0_Plac_1 _mask.jpg,290.0,301.0,216.0,113.0,24408.0,vertical
+ITECH2-0559,Output_Masks\03_iTECH2-0559_1_36.0_Plac_1 _mask.jpg,359.0,220.0,69.0,209.0,14421.0,horizontal
+ITECH2-0588,Output_Masks\03_iTECH2-588_1_36.0_Plac_1 _mask.jpg,286.0,65.0,198.0,71.0,14058.0,vertical
+ITECH2-0596,Output_Masks\03_iTECH2-0596_1_36.0_Plac_1 _mask.jpg,458.0,103.0,46.0,258.0,11868.0,horizontal
+ITECH2-0607,Output_Masks\03_iTECH2-0607_1_36.0_Plac_1 _mask.jpg,303.0,140.0,153.0,53.0,8109.0,vertical
+ITECH3-0447,Output_Masks\03_iTECH3-0447_1_37.0_Plac_1 _mask.jpg,134.0,293.0,272.0,86.0,23392.0,vertical
+ITECH3-0467,Output_Masks\03_iTECH3-0467_1_35.0_Plac_1 _mask.jpg,133.0,308.0,253.0,69.0,17457.0,vertical
+ITECH3-0472,Output_Masks\03_iTECH3-0472_1_36.0_Plac_1 _mask.jpg,74.0,339.0,82.0,176.0,14432.0,horizontal
+ITECH3-0502,Output_Masks\03_iTECH3-0502_1_35.4_Plac_1 _mask.jpg,138.0,331.0,108.0,188.0,20304.0,horizontal
+ITECH3-0537,Output_Masks\03_iTECH3-0537_1_35.5_Plac_1 _mask.jpg,196.0,315.0,269.0,89.0,23941.0,vertical
+ITECH3-0556,Output_Masks\03_iTECH3-0556_1_36.2_Plac_1 _mask.jpg,133.0,285.0,204.0,73.0,14892.0,vertical
+ITECH3-0560,Output_Masks\03_iTECH3-0560_1_35.4_Plac_1 _mask.jpg,102.0,340.0,330.0,87.0,28710.0,vertical
+ITECH4-0261,Output_Masks\03_ITECH4-0261_1_36.3_Plac_1 _mask.jpg,136.0,321.0,159.0,77.0,12243.0,vertical
+ITECH4-0432,Output_Masks\03_ITECH4-0432_1_36.1_Plac_1 _mask.jpg,133.0,287.0,205.0,63.0,12915.0,vertical
+ITECH4-0465,Output_Masks\03_ITECH4-0465_1_36.0_Plac_1 _mask.jpg,179.0,303.0,93.0,102.0,9486.0,vertical
+ITECH4-0488,Output_Masks\03_ITECH4-0488_1_35.6_Plac_1 _mask.jpg,127.0,277.0,207.0,140.0,28980.0,vertical

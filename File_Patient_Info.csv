@@ -579,89 +579,84 @@ ID,Trimester,Group,Machine,File Type,Path
 191-1,2,fgr,e-22,segmentation,Output_Segmented_Images\IMG_20240312_1_34_segmented.jpg
 114-1,3,control,e-22,mask,Output_Masks\IMG_20230811_1_36_mask.jpg
 121-1,2,control,e-22,segmentation,Output_Segmented_Images\IMG_20230804_3_38_segmented.jpg
-ITECH1-0854,/,Unknown,clarius,mask,Output_Masks\03_ITECH1-0854_1_37.4_Plac_1_mask.jpg
-ITECH1-0854,/,Unknown,e-10,mask,Output_Masks\03_ITECH1-0854_1_37.4_Plac_1_mask.jpg
-ITECH1-0856,/,Unknown,clarius,mask,Output_Masks\03_ITECH1-0856_1_35.5_Plac_1_mask.jpg
-ITECH1-0872,/,Unknown,clarius,mask,Output_Masks\03_ITECH1-0872_1_39.0_Plac_1_mask.jpg
-ITECH1-0872,/,Unknown,e-10,mask,Output_Masks\03_ITECH1-0872_1_39.0_Plac_1_mask.jpg
-ITECH1-0898,/,Unknown,clarius,mask,Output_Masks\03_ITECH1-0898_1_36.5_Plac_1_mask.jpg
-ITECH1-0898,/,Unknown,e-10,mask,Output_Masks\03_ITECH1-0898_1_36.5_Plac_1_mask.jpg
-ITECH1-0956,/,Unknown,clarius,mask,Output_Masks\03-ITECH1-0956_1_36.0_Plac_1_mask.jpg
-ITECH1-0956,/,Unknown,e-10,mask,Output_Masks\03-ITECH1-0956_1_36.0_Plac_1_mask.jpg
-ITECH2-0463,/,Unknown,clarius,mask,Output_Masks\03_iTECH2-0463_1_36.1_Plac_1_mask.jpg
-ITECH2-0558,/,Unknown,clarius,mask,Output_Masks\03_iTECH2-0558_1_36.0_Plac_1_mask.jpg
-ITECH2-0559,/,Unknown,clarius,mask,Output_Masks\03_iTECH2-0559_1_36.0_Plac_1_mask.jpg
-ITECH2-0588,/,Unknown,clarius,mask,Output_Masks\03_iTECH2-588_1_36.0_Plac_1_mask.jpg
-ITECH2-0596,/,Unknown,clarius,mask,Output_Masks\03_iTECH2-0596_1_36.0_Plac_1_mask.jpg
-ITECH2-0607,/,Unknown,clarius,mask,Output_Masks\03_iTECH2-0607_1_36.0_Plac_1_mask.jpg
-ITECH3-0447,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0447_1_37.0_Plac_1_mask.jpg
-ITECH3-0467,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0467_1_35.0_Plac_1_mask.jpg
-ITECH3-0472,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0472_1_36.0_Plac_1_mask.jpg
-ITECH3-0502,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0502_1_35.4_Plac_1_mask.jpg
-ITECH3-0537,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0537_1_35.5_Plac_1_mask.jpg
-ITECH3-0556,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0556_1_36.2_Plac_1_mask.jpg
-ITECH3-0560,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0560_1_35.4_Plac_1_mask.jpg
-ITECH4-0261,/,Unknown,clarius,mask,Output_Masks\03_ITECH4-0261_1_36.3_Plac_1_mask.jpg
-ITECH4-0465,/,Unknown,clarius,mask,Output_Masks\03_ITECH4-0465_1_36.0_Plac_1_mask.jpg
-ITECH4-0488,/,Unknown,clarius,mask,Output_Masks\03_ITECH4-0488_1_35.6_Plac_1_mask.jpg
-ITECH1-0854,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH1-0854_1_37.4_Plac_1_e10_segmented.jpg
-ITECH1-0872,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH1-0872_1_39.0_Plac_1_e10_segmented.jpg
-ITECH1-0898,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH1-0898_1_36.5_Plac_1_e10_segmented.jpg
-ITECH1-0956,/,Unknown,e-10,segmentation,Output_Segmented_Images\03-ITECH1-0956_1_36.0_Plac_1_e10_segmented.jpg
+ITECH1-0854,/,Unknown,clarius,mask,Output_Masks\03_ITECH1-0854_1_37.4_Plac_1 _mask.jpg
 ITECH1-0854,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH1-0854_1_37.4_Plac_1_clarius_segmented.jpg
+ITECH1-0854,/,Unknown,e-10,mask,Output_Masks\03_ITECH1-0854_1_37.4_Plac_1_mask.jpg
+ITECH1-0854,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH1-0854_1_37.4_Plac_1_e10_segmented.jpg
+ITECH1-0856,/,Unknown,clarius,mask,Output_Masks\03_ITECH1-0856_1_35.5_Plac_1 _mask.jpg
 ITECH1-0856,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH1-0856_1_35.5_Plac_1_clarius_segmented.jpg
-ITECH1-0872,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH1-0872_1_39.0_Plac_1_clarius_segmented.jpg
-ITECH1-0898,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH1-0898_1_36.5_Plac_1_clarius_segmented.jpg
-ITECH1-0956,/,Unknown,clarius,segmentation,Output_Segmented_Images\03-ITECH1-0956_1_36.0_Plac_1_clarius_segmented.jpg
-ITECH2-0463,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH2-0463_1_36.1_Plac_1_clarius_segmented.jpg
-ITECH2-0558,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH2-0558_1_36.0_Plac_1_clarius_segmented.jpg
-ITECH2-0559,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH2-0559_1_36.0_Plac_1_clarius_segmented.jpg
-ITECH2-0588,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH2-588_1_36.0_Plac_1_clarius_segmented.jpg
-ITECH2-0596,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH2-0596_1_36.0_Plac_1_clarius_segmented.jpg
-ITECH2-0607,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH2-0607_1_36.0_Plac_1_clarius_segmented.jpg
-ITECH3-0447,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0447_1_37.0_Plac_1_clarius_segmented.jpg
-ITECH3-0467,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0467_1_35.0_Plac_1_clarius_segmented.jpg
-ITECH3-0472,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0472_1_36.0_Plac_1_clarius_segmented.jpg
-ITECH3-0502,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0502_1_35.4_Plac_1_clarius_segmented.jpg
-ITECH3-0537,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0537_1_35.5_Plac_1_clarius_segmented.jpg
-ITECH3-0556,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0556_1_36.2_Plac_1_clarius_segmented.jpg
-ITECH3-0560,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0560_1_35.4_Plac_1_clarius_segmented.jpg
-ITECH4-0261,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH4-0261_1_36.3_Plac_1_clarius_segmented.jpg
-ITECH4-0432,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH4-0432_1_36.1_Plac_1_clarius_segmented.jpg
-ITECH4-0465,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH4-0465_1_36.0_Plac_1_clarius_segmented.jpg
-ITECH4-0488,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH4-0488_1_35.6_Plac_1_clarius_segmented.jpg
 ITECH1-0856,/,Unknown,e-10,mask,Output_Masks\03_ITECH1-0856_1_35.5_Plac_1_mask.jpg
 ITECH1-0856,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH1-0856_1_35.5_Plac_1_e10_segmented.jpg
+ITECH1-0872,/,Unknown,clarius,mask,Output_Masks\03_ITECH1-0872_1_39.0_Plac_1 _mask.jpg
+ITECH1-0872,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH1-0872_1_39.0_Plac_1_clarius_segmented.jpg
+ITECH1-0872,/,Unknown,e-10,mask,Output_Masks\03_ITECH1-0872_1_39.0_Plac_1_mask.jpg
+ITECH1-0872,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH1-0872_1_39.0_Plac_1_e10_segmented.jpg
+ITECH1-0898,/,Unknown,clarius,mask,Output_Masks\03_ITECH1-0898_1_36.5_Plac_1 _mask.jpg
+ITECH1-0898,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH1-0898_1_36.5_Plac_1_clarius_segmented.jpg
+ITECH1-0898,/,Unknown,e-10,mask,Output_Masks\03_ITECH1-0898_1_36.5_Plac_1_mask.jpg
+ITECH1-0898,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH1-0898_1_36.5_Plac_1_e10_segmented.jpg
+ITECH1-0956,/,Unknown,clarius,mask,Output_Masks\03-ITECH1-0956_1_36.0_Plac_1 _mask.jpg
+ITECH1-0956,/,Unknown,clarius,segmentation,Output_Segmented_Images\03-ITECH1-0956_1_36.0_Plac_1_clarius_segmented.jpg
+ITECH1-0956,/,Unknown,e-10,mask,Output_Masks\03-ITECH1-0956_1_36.0_Plac_1_mask.jpg
+ITECH1-0956,/,Unknown,e-10,segmentation,Output_Segmented_Images\03-ITECH1-0956_1_36.0_Plac_1_e10_segmented.jpg
+ITECH2-0463,/,Unknown,clarius,mask,Output_Masks\03_iTECH2-0463_1_36.1_Plac_1 _mask.jpg
+ITECH2-0463,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH2-0463_1_36.1_Plac_1_clarius_segmented.jpg
 ITECH2-0463,/,Unknown,e-10,mask,Output_Masks\03_iTECH2-0463_1_36.1_Plac_1_mask.jpg
 ITECH2-0463,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_iTECH2-0463_1_36.1_Plac_1_e10_segmented.jpg
+ITECH2-0558,/,Unknown,clarius,mask,Output_Masks\03_iTECH2-0558_1_36.0_Plac_1 _mask.jpg
+ITECH2-0558,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH2-0558_1_36.0_Plac_1_clarius_segmented.jpg
 ITECH2-0558,/,Unknown,e-10,mask,Output_Masks\03_iTECH2-0558_1_36.0_Plac_1_mask.jpg
 ITECH2-0558,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_iTECH2-0558_1_36.0_Plac_1_e10_segmented.jpg
+ITECH2-0559,/,Unknown,clarius,mask,Output_Masks\03_iTECH2-0559_1_36.0_Plac_1 _mask.jpg
+ITECH2-0559,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH2-0559_1_36.0_Plac_1_clarius_segmented.jpg
 ITECH2-0559,/,Unknown,e-10,mask,Output_Masks\03_iTECH2-0559_1_36.0_Plac_1_mask.jpg
 ITECH2-0559,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_iTECH2-0559_1_36.0_Plac_1_e10_segmented.jpg
+ITECH2-0588,/,Unknown,clarius,mask,Output_Masks\03_iTECH2-588_1_36.0_Plac_1 _mask.jpg
+ITECH2-0588,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH2-588_1_36.0_Plac_1_clarius_segmented.jpg
 ITECH2-0588,/,Unknown,e-10,mask,Output_Masks\03_iTECH2-588_1_36.0_Plac_1_mask.jpg
 ITECH2-0588,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_iTECH2-588_1_36.0_Plac_1_e10_segmented.jpg
+ITECH2-0596,/,Unknown,clarius,mask,Output_Masks\03_iTECH2-0596_1_36.0_Plac_1 _mask.jpg
+ITECH2-0596,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH2-0596_1_36.0_Plac_1_clarius_segmented.jpg
 ITECH2-0596,/,Unknown,e-10,mask,Output_Masks\03_iTECH2-0596_1_36.0_Plac_1_mask.jpg
 ITECH2-0596,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_iTECH2-0596_1_36.0_Plac_1_e10_segmented.jpg
+ITECH2-0607,/,Unknown,clarius,mask,Output_Masks\03_iTECH2-0607_1_36.0_Plac_1 _mask.jpg
+ITECH2-0607,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH2-0607_1_36.0_Plac_1_clarius_segmented.jpg
 ITECH2-0607,/,Unknown,e-10,mask,Output_Masks\03_iTECH2-0607_1_36.0_Plac_1_mask.jpg
 ITECH2-0607,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_iTECH2-0607_1_36.0_Plac_1_e10_segmented.jpg
+ITECH3-0447,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0447_1_37.0_Plac_1 _mask.jpg
+ITECH3-0447,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0447_1_37.0_Plac_1_clarius_segmented.jpg
 ITECH3-0447,/,Unknown,e-10,mask,Output_Masks\03_iTECH3-0447_1_37.0_Plac_1_mask.jpg
 ITECH3-0447,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_iTECH3-0447_1_37.0_Plac_1_e10_segmented.jpg
+ITECH3-0467,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0467_1_35.0_Plac_1 _mask.jpg
+ITECH3-0467,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0467_1_35.0_Plac_1_clarius_segmented.jpg
 ITECH3-0467,/,Unknown,e-10,mask,Output_Masks\03_iTECH3-0467_1_35.0_Plac_1_mask.jpg
 ITECH3-0467,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_iTECH3-0467_1_35.0_Plac_1_e10_segmented.jpg
+ITECH3-0472,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0472_1_36.0_Plac_1 _mask.jpg
+ITECH3-0472,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0472_1_36.0_Plac_1_clarius_segmented.jpg
 ITECH3-0472,/,Unknown,e-10,mask,Output_Masks\03_iTECH3-0472_1_36.0_Plac_1_mask.jpg
 ITECH3-0472,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_iTECH3-0472_1_36.0_Plac_1_e10_segmented.jpg
+ITECH3-0502,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0502_1_35.4_Plac_1 _mask.jpg
+ITECH3-0502,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0502_1_35.4_Plac_1_clarius_segmented.jpg
 ITECH3-0502,/,Unknown,e-10,mask,Output_Masks\03_iTECH3-0502_1_35.4_Plac_1_mask.jpg
 ITECH3-0502,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_iTECH3-0502_1_35.4_Plac_1_e10_segmented.jpg
+ITECH3-0537,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0537_1_35.5_Plac_1 _mask.jpg
+ITECH3-0537,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0537_1_35.5_Plac_1_clarius_segmented.jpg
 ITECH3-0537,/,Unknown,e-10,mask,Output_Masks\03_iTECH3-0537_1_35.5_Plac_1_mask.jpg
 ITECH3-0537,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_iTECH3-0537_1_35.5_Plac_1_e10_segmented.jpg
+ITECH3-0556,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0556_1_36.2_Plac_1 _mask.jpg
+ITECH3-0556,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0556_1_36.2_Plac_1_clarius_segmented.jpg
 ITECH3-0556,/,Unknown,e-10,mask,Output_Masks\03_iTECH3-0556_1_36.2_Plac_1_mask.jpg
 ITECH3-0556,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_iTECH3-0556_1_36.2_Plac_1_e10_segmented.jpg
+ITECH3-0560,/,Unknown,clarius,mask,Output_Masks\03_iTECH3-0560_1_35.4_Plac_1 _mask.jpg
+ITECH3-0560,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_iTECH3-0560_1_35.4_Plac_1_clarius_segmented.jpg
 ITECH3-0560,/,Unknown,e-10,mask,Output_Masks\03_iTECH3-0560_1_35.4_Plac_1_mask.jpg
 ITECH3-0560,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_iTECH3-0560_1_35.4_Plac_1_e10_segmented.jpg
 ITECH4-0169,/,Unknown,e-10,mask,Output_Masks\03_ITECH4-0169_1_36.5_Plac_1_mask.jpg
 ITECH4-0169,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH4-0169_1_36.5_Plac_1_e10_segmented.jpg
 ITECH4-0178,/,Unknown,e-10,mask,Output_Masks\03_ITECH4-0178_1_36.1_Plac_1_mask.jpg
 ITECH4-0178,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH4-0178_1_36.1_Plac_1_e10_segmented.jpg
+ITECH4-0261,/,Unknown,clarius,mask,Output_Masks\03_ITECH4-0261_1_36.3_Plac_1 _mask.jpg
+ITECH4-0261,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH4-0261_1_36.3_Plac_1_clarius_segmented.jpg
 ITECH4-0261,/,Unknown,e-10,mask,Output_Masks\03_ITECH4-0261_1_36.3_Plac_1_mask.jpg
 ITECH4-0261,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH4-0261_1_36.3_Plac_1_e10_segmented.jpg
 ITECH4-0315,/,Unknown,e-10,mask,Output_Masks\03_ITECH4-0315_1_36.1_Plac_1_mask.jpg
@@ -670,9 +665,15 @@ ITECH4-0335,/,Unknown,e-10,mask,Output_Masks\03_ITECH4-0335_1_36.0_Plac_1_mask.j
 ITECH4-0335,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH4-0335_1_36.0_Plac_1_e10_segmented.jpg
 ITECH4-0424,/,Unknown,e-10,mask,Output_Masks\03_ITECH4-0424_1_35.5_Plac_1_mask.jpg
 ITECH4-0424,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH4-0424_1_35.5_Plac_1_e10_segmented.jpg
+ITECH4-0432,/,Unknown,clarius,mask,Output_Masks\03_ITECH4-0432_1_36.1_Plac_1 _mask.jpg
+ITECH4-0432,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH4-0432_1_36.1_Plac_1_clarius_segmented.jpg
 ITECH4-0432,/,Unknown,e-10,mask,Output_Masks\03_ITECH4-0432_1_36.3_Plac_1_mask.jpg
 ITECH4-0432,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH4-0432_1_36.3_Plac_1_e10_segmented.jpg
+ITECH4-0465,/,Unknown,clarius,mask,Output_Masks\03_ITECH4-0465_1_36.0_Plac_1 _mask.jpg
+ITECH4-0465,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH4-0465_1_36.0_Plac_1_clarius_segmented.jpg
 ITECH4-0465,/,Unknown,e-10,mask,Output_Masks\03_ITECH4-0465_1_36.0_Plac_1_mask.jpg
 ITECH4-0465,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH4-0465_1_36.0_Plac_1_e10_segmented.jpg
+ITECH4-0488,/,Unknown,clarius,mask,Output_Masks\03_ITECH4-0488_1_35.6_Plac_1 _mask.jpg
+ITECH4-0488,/,Unknown,clarius,segmentation,Output_Segmented_Images\03_ITECH4-0488_1_35.6_Plac_1_clarius_segmented.jpg
 ITECH4-0488,/,Unknown,e-10,mask,Output_Masks\03_ITECH4-0488_1_35.6_Plac_1_mask.jpg
 ITECH4-0488,/,Unknown,e-10,segmentation,Output_Segmented_Images\03_ITECH4-0488_1_35.6_Plac_1_e10_segmented.jpg
